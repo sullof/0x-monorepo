@@ -1,5 +1,5 @@
 import { AssetBuyer, AssetBuyerError, BuyQuote } from '@0x/asset-buyer';
-import { Web3Wrapper } from '@0x/web3-wrapper';
+import { EthRPCClient } from '@0x/eth-rpc-client';
 import * as _ from 'lodash';
 import * as React from 'react';
 import { oc } from 'ts-optchain';
@@ -50,10 +50,10 @@ export class BuyButton extends React.Component<BuyButtonProps> {
         }
 
         this.props.onValidationPending(buyQuote);
-        const web3Wrapper = new Web3Wrapper(assetBuyer.provider);
-        const takerAddress = await getBestAddress(web3Wrapper);
+        const ethRPCClient = new EthRPCClient(assetBuyer.provider);
+        const takerAddress = await getBestAddress(ethRPCClient);
 
-        const hasSufficientEth = await balanceUtil.hasSufficientEth(takerAddress, buyQuote, web3Wrapper);
+        const hasSufficientEth = await balanceUtil.hasSufficientEth(takerAddress, buyQuote, ethRPCClient);
         if (!hasSufficientEth) {
             this.props.onValidationFail(buyQuote, ZeroExInstantError.InsufficientETH);
             return;
@@ -85,7 +85,7 @@ export class BuyButton extends React.Component<BuyButtonProps> {
         const expectedEndTimeUnix = startTimeUnix + gasInfo.estimatedTimeMs;
         this.props.onBuyProcessing(buyQuote, txHash, startTimeUnix, expectedEndTimeUnix);
         try {
-            await web3Wrapper.awaitTransactionSuccessAsync(txHash);
+            await ethRPCClient.awaitTransactionSuccessAsync(txHash);
         } catch (e) {
             if (e instanceof Error && e.message.startsWith(WEB_3_WRAPPER_TRANSACTION_FAILED_ERROR_MSG_PREFIX)) {
                 this.props.onBuyFailure(buyQuote, txHash);
