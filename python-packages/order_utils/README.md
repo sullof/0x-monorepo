@@ -18,7 +18,7 @@ Please read our [contribution guidelines](../../CONTRIBUTING.md) before getting 
 
 ### Install Code and Dependencies
 
-Ensure that you have Python >=3.6 installed, then:
+Ensure that you have installed Python >=3.6 and [ganache-cli](https://www.npmjs.com/package/ganache-cli). Then:
 
 ```bash
 pip install -e .[dev]
@@ -26,7 +26,7 @@ pip install -e .[dev]
 
 ### Test
 
-`./setup.py test`
+Tests depend on a running ganache instance, using the snapshot stored in the repo. In a separate terminal window, start ganache via `./setup.py ganache`. Then the tests can be run with `./setup.py test`.
 
 ### Clean
 
