@@ -23,7 +23,13 @@ import {
 import * as _ from 'lodash';
 
 import { marshaller } from './marshaller';
-import { BlockWithoutTransactionDataRPC, BlockWithTransactionDataRPC, EthRPCClientErrors, NodeType, TransactionRPC } from './types';
+import {
+    BlockWithoutTransactionDataRPC,
+    BlockWithTransactionDataRPC,
+    EthRPCClientErrors,
+    NodeType,
+    TransactionRPC,
+} from './types';
 import { utils } from './utils';
 
 const BASE_TEN = 10;
