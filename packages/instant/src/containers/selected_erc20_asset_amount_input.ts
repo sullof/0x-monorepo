@@ -1,7 +1,7 @@
 import { AssetBuyer, AssetBuyerError, BuyQuote } from '@0x/asset-buyer';
+import { EthRPCClient } from '@0x/eth-rpc-client';
 import { AssetProxyId } from '@0x/types';
 import { BigNumber } from '@0x/utils';
-import { Web3Wrapper } from '@0x/web3-wrapper';
 import * as _ from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -77,7 +77,7 @@ const updateBuyQuoteAsync = async (
     affiliateInfo?: AffiliateInfo,
 ): Promise<void> => {
     // get a new buy quote.
-    const baseUnitValue = Web3Wrapper.toBaseUnitAmount(assetAmount, asset.metaData.decimals);
+    const baseUnitValue = EthRPCClient.toBaseUnitAmount(assetAmount, asset.metaData.decimals);
 
     // mark quote as pending
     dispatch(actions.setQuoteRequestStatePending());

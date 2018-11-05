@@ -1,7 +1,7 @@
 import { AssetBuyer, BuyQuote } from '@0x/asset-buyer';
+import { EthRPCClient } from '@0x/eth-rpc-client';
 import { AssetProxyId, ObjectMap } from '@0x/types';
 import { BigNumber } from '@0x/utils';
-import { Web3Wrapper } from '@0x/web3-wrapper';
 import * as _ from 'lodash';
 
 import { assetMetaDataMap } from '../data/asset_meta_data_map';
@@ -198,7 +198,7 @@ const doesBuyQuoteMatchState = (buyQuote: BuyQuote, state: State): boolean => {
     // if ERC721, return true
     const selectedAssetMetaData = selectedAssetIfExists.metaData;
     if (selectedAssetMetaData.assetProxyId === AssetProxyId.ERC20) {
-        const selectedAssetAmountBaseUnits = Web3Wrapper.toBaseUnitAmount(
+        const selectedAssetAmountBaseUnits = EthRPCClient.toBaseUnitAmount(
             selectedAssetAmountIfExists,
             selectedAssetMetaData.decimals,
         );

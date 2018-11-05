@@ -1,7 +1,7 @@
 import { AssetBuyer } from '@0x/asset-buyer';
+import { EthRPCClient } from '@0x/eth-rpc-client';
 import { ObjectMap, SignedOrder } from '@0x/types';
 import { BigNumber } from '@0x/utils';
-import { Web3Wrapper } from '@0x/web3-wrapper';
 import { Provider } from 'ethereum-types';
 import * as _ from 'lodash';
 import * as React from 'react';
@@ -123,8 +123,8 @@ export class ZeroExInstantProvider extends React.Component<ZeroExInstantProvider
         const assetBuyerIfExists = this._store.getState().assetBuyer;
         const providerIfExists = oc(assetBuyerIfExists).provider();
         if (!_.isUndefined(providerIfExists)) {
-            const web3Wrapper = new Web3Wrapper(providerIfExists);
-            const networkOfProvider = await web3Wrapper.getNetworkIdAsync();
+            const ethRPCClient = new EthRPCClient(providerIfExists);
+            const networkOfProvider = await ethRPCClient.getNetworkIdAsync();
             if (network !== networkOfProvider) {
                 const errorMessage = `Wrong network detected. Try switching to ${Network[network]}.`;
                 errorFlasher.flashNewErrorMessage(this._store.dispatch, errorMessage, msToShowError);
